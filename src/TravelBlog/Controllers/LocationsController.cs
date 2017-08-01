@@ -10,13 +10,15 @@ namespace TravelBlog.Controllers
 {
     public class LocationsController : Controller
     {
+        //Instantiate database object
+
         private TravelBlogContext db = new TravelBlogContext();
         public IActionResult Index()
         {
             return View(db.Locations.ToList());
         }
 
-        //DETAILS
+        //Details
         public IActionResult Details(int Id)
         {
             var thisLocation = db.Locations.Include(locations => locations.Experiences).FirstOrDefault(locations => locations.LocationId == Id);
@@ -25,7 +27,7 @@ namespace TravelBlog.Controllers
             return View(thisLocation);
         }
 
-        //CREATE
+        //Create
         public IActionResult Create()
         {
             return View();
@@ -38,7 +40,7 @@ namespace TravelBlog.Controllers
             return RedirectToAction("Index");
         }
 
-        // EDIT
+        //Edit
         public IActionResult Edit(int id)
         {
             var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
@@ -53,7 +55,7 @@ namespace TravelBlog.Controllers
             return RedirectToAction("Index");
         }
 
-        //DELETE
+        //Delete
         public IActionResult Delete(int id)
         {
             var thisLocation = db.Locations.FirstOrDefault(items => items.LocationId == id);

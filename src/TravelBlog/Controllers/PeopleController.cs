@@ -11,7 +11,9 @@ namespace TravelBlog.Controllers
 {
     public class PeopleController : Controller
     {
+        //Instantiate database object
         private TravelBlogContext db = new TravelBlogContext();
+        //Collects List of Experiences from DB
         public IActionResult Index()
         {
             return View(db.People.Include(people => people.Experience).ToList());
@@ -21,6 +23,7 @@ namespace TravelBlog.Controllers
             var thisPeople = db.People.FirstOrDefault(people => people.PeopleId == id);
             return View(thisPeople);
         }
+        //Create
         public IActionResult Create()
         {
             ViewBag.ExperienceId = new SelectList(db.Experiences, "ExperienceId", "Story");
@@ -33,6 +36,7 @@ namespace TravelBlog.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        //Edit
         public IActionResult Edit(int id)
         {
             var thisPeople = db.People.FirstOrDefault(people => people.PeopleId == id);
@@ -46,6 +50,7 @@ namespace TravelBlog.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        //Delete
         public ActionResult Delete(int id)
         {
             var thisPeople = db.People.FirstOrDefault(people => people.PeopleId == id);
