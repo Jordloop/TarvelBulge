@@ -11,7 +11,7 @@
 <ul>
     @foreach (var listLocation in Model)
     {
-        <li>@Html.DisplayFor(modelLocation => listLocation.Name) | @Html.ActionLink("Details", "Details", new { id = listLocation.LocationId }) | @Html.ActionLink("Edit", "Edit", new { id = listLocation.LocationId }) | @Html.ActionLink("Delete", "Delete", new { id = listLocation.LocationId })</li>   
+        <li>@Html.ActionLink(listLocation.Name, "Details", new { id = listLocation.LocationId }) | @Html.ActionLink("Edit", "Edit", new { id = listLocation.LocationId }) | @Html.ActionLink("Delete", "Delete", new { id = listLocation.LocationId })</li>   
     }
 </ul>
 
