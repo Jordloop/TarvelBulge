@@ -29,7 +29,7 @@ namespace TravelBlog.Controllers
             return RedirectToAction("Index");
         }
 
-        // Edit
+        // EDIT
         public IActionResult Edit(int id)
         {
             var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
@@ -40,6 +40,22 @@ namespace TravelBlog.Controllers
         public IActionResult Edit(Location location)
         {
             db.Entry(location).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //DELETE
+        public IActionResult Delete(int id)
+        {
+            var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
+            return View(thisLocation);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
+            db.Locations.Remove(thisLocation);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
