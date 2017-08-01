@@ -1,0 +1,13 @@
+﻿@model TravelBlog.Models.People
+
+@{
+    ViewData["Title"] = "Tarvle Bulge Detailss!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Person Details</h2>
+<hr />
+
+<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</p>
+
+<p>@Html.ActionLink("Edit", "Edit", "People", new { id = Model.PeopleId }) | @Html.ActionLink("Back to List", "Index")</p>

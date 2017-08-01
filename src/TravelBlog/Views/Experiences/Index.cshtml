@@ -21,14 +21,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelExperience => listExperience.Story)
+                @Html.ActionLink(listExperience.Story, "Details", new { id = listExperience.ExperienceId }) 
             </td>
             <td>
                 @Html.DisplayFor(modelExperience => listExperience.Location.Name)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = listExperience.ExperienceId }) |
-                @Html.ActionLink("Details", "Details", new { id = listExperience.ExperienceId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = listExperience.ExperienceId })
             </td>
         </tr>

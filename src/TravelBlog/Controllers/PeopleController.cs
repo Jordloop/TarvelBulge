@@ -23,7 +23,7 @@ namespace TravelBlog.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.ExperienceId = new SelectList(db.Experiences, "ExperienceId", "Name");
+            ViewBag.ExperienceId = new SelectList(db.Experiences, "ExperienceId", "Story");
             return View();
         }
         [HttpPost]
@@ -36,7 +36,7 @@ namespace TravelBlog.Controllers
         public IActionResult Edit(int id)
         {
             var thisPeople = db.People.FirstOrDefault(people => people.PeopleId == id);
-            ViewBag.ExperienceId = new SelectList(db.Experiences, "ExperienceId", "Name");
+            ViewBag.ExperienceId = new SelectList(db.Experiences, "ExperienceId", "Story");
             return View(thisPeople);
         }
         [HttpPost]

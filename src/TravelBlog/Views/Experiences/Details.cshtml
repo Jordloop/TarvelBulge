@@ -8,7 +8,16 @@
 <hr />
 
 <p>@Html.DisplayNameFor(model => model.Story): @Html.DisplayFor(model => model.Story)</p>
-<p>@Html.DisplayNameFor(model => model.LocationId) : @Html.DisplayFor(model => model.LocationId)</p>
 
 <p>@Html.ActionLink("Edit", "Edit", new { id = Model.ExperienceId }) | @Html.ActionLink("Back to List", "Index")</p>
-
+<h2>The People with whom I experienced this with are as follows:</h2>
+@if (Model.People.Count != 0)
+{
+    @foreach (var listPeople in Model.People)
+    {
+        <p>@Html.ActionLink(@listPeople.Name, "Details", "People", new { id = listPeople.PeopleId })</p>
+    }
+}
+else{ 
+    <h3>I experienced this with no people.</h3>
+}
