@@ -11,6 +11,7 @@ namespace TravelBlog.Controllers
 {
     public class ExperiencesController : Controller
     {
+
         //Instantiate database object
         private TravelBlogContext db = new TravelBlogContext();
 
