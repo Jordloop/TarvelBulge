@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "TarvleBulge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<TravelBlog.Models.Location>
+ 
+<h2>To Do List</h2>
+<h4>@Html.DisplayNameFor(model => model.Name)</h4>
+<ul>
+    @foreach (var listLocation in Model)
+    {
+        <li>@Html.DisplayFor(modelLocation => listLocation.Name)</li>
+    }
+</ul>
+
