@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "TarvleBulge!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TravelBlog.Models.Location
+
+<h2>Me Experiences at this Location are as follows: </h2>
+@foreach (var listItem in Model.Experiences)
+{
+    <p>@Html.ActionLink(@listItem.Story, "Details", "Experiences", new { id = listItem.ExperienceId })</p>
+}
