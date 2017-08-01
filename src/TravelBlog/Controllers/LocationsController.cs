@@ -47,14 +47,14 @@ namespace TravelBlog.Controllers
         //DELETE
         public IActionResult Delete(int id)
         {
-            var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
+            var thisLocation = db.Locations.FirstOrDefault(items => items.LocationId == id);
             return View(thisLocation);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var thisLocation = db.Locations.FirstOrDefault(locations => locations.LocationId == id);
+            var thisLocation = db.Locations.FirstOrDefault(items => items.LocationId == id);
             db.Locations.Remove(thisLocation);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -7,17 +7,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TravelBlog.Models
 {
-    [Table("Locations")]
-    public class Location
+    [Table ("Experiences")]
+    public class Experience
     {
-        public Location()
-        {
-            this.Experiences = new HashSet<Experience>();
-        }
-
         [Key]
+        public int ExperienceId { get; set; }
+        public string Story { get; set; }
         public int LocationId { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Experience> Experiences { get; set; }
+        public virtual Location Location { get; set; }
     }
 }
