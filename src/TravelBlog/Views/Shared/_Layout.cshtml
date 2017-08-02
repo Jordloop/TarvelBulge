@@ -2,13 +2,29 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
+    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css"/>
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
+        <header>
+            <div class="content-wrapper">
+                  @Html.Partial("_Header.cshtml")
+            </div>
+        </header>
+        <div id="body">
+            <section class="content-wrapper main-content clear-fix">
+                 @RenderBody()
+            </section>          
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                @Html.Partial("_Footer.cshtml")
+            </div>
+        </footer>
+    <div class="well">
         <p>@Html.ActionLink("Go Home TarvleBulge!", "Index", "Home")</p>
     </div>
+    
 </body>
 </html>
