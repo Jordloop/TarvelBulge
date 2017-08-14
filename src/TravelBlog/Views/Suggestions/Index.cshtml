@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "TarvleBulge!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<TravelBlog.Models.Suggestion>
+ 
+<h2>Locations</h2>
+<hr/>
+<ul>
+    @foreach (var listLocation in Model)
+    {
+        <li>@Html.ActionLink(listLocation.Details, "Details", new { id = listLocation.SuggestionId }) | @Html.ActionLink("Edit", "Edit", new { id = listLocation.SuggestionId }) | @Html.ActionLink("Delete", "Delete", new { id = listLocation.SuggestionId })</li>   
+    }
+</ul>
+
+<p>@Html.ActionLink("Suggest a Location", "Create")</p>

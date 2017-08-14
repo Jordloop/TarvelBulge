@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelBlog.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace TravelBlog.Controllers
 {
@@ -39,8 +40,11 @@ namespace TravelBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Location location)
+        public async Task<IActionResult> Create(Location location)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            location.User = currentUser;
             _db.Locations.Add(location);
             _db.SaveChanges();
             return RedirectToAction("Index");

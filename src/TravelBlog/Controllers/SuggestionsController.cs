@@ -11,13 +11,13 @@ using System.Security.Claims;
 
 namespace TravelBlog.Controllers
 {
-    public class ExperiencesController : Controller
+    public class SuggestionsController : Controller
     {
 
         private readonly TravelBlogContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ExperiencesController(UserManager<ApplicationUser> userManager, TravelBlogContext db)
+        public SuggestionsController(UserManager<ApplicationUser> userManager, TravelBlogContext db)
         {
             _userManager = userManager;
             _db = db;
@@ -26,7 +26,7 @@ namespace TravelBlog.Controllers
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var currentUser = await _userManager.FindByIdAsync(userId);
-            return View(_db.Experiences.Where(x => x.User.Id == currentUser.Id));
+            return View(_db.Suggestions.Where(x => x.User.Id == currentUser.Id));
         }
         public IActionResult Create()
         {
@@ -34,48 +34,50 @@ namespace TravelBlog.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Experience experience, int locationId)
+        public async Task<IActionResult> Create(Suggestion suggestion, int locationId)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var currentUser = await _userManager.FindByIdAsync(userId);
+            suggestion.User = currentUser;
             var thisLocation = _db.Locations.FirstOrDefault(locations => locations.LocationId == locationId);
-            experience.Location = thisLocation;
-            experience.User = currentUser;
-            _db.Experiences.Add(experience);
+            suggestion.Location = thisLocation;
+            suggestion.Visted = false;
+            suggestion.UpVote = 0;
+            _db.Suggestions.Add(suggestion);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Details(int id)
         {
-            var thisExperience = _db.Experiences.Include(experiences => experiences.People).FirstOrDefault(experiences => experiences.ExperienceId == id);
-            return View(thisExperience);
+            var thisSuggestion = _db.Suggestions.Include(suggestions => suggestions.Location).FirstOrDefault(suggestions => suggestions.SuggestionId == id);
+            return View(thisSuggestion);
         }
         //Create 
-      
+
         public IActionResult Edit(int id)
         {
-            var thisExperience = _db.Experiences.FirstOrDefault(experiences => experiences.ExperienceId == id);
+            var thisSuggestion = _db.Suggestions.FirstOrDefault(suggestions => suggestions.SuggestionId == id);
             ViewBag.LocationId = new SelectList(_db.Locations, "LocationId", "Name");
-            return View(thisExperience);
+            return View(thisSuggestion);
         }
         [HttpPost]
-        public IActionResult Edit(Experience experience)
+        public IActionResult Edit(Suggestion suggestion)
         {
-            _db.Entry(experience).State = EntityState.Modified;
+            _db.Entry(suggestion).State = EntityState.Modified;
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
         //Delete
         public ActionResult Delete(int id)
         {
-            var thisExperience = _db.Experiences.FirstOrDefault(experiences => experiences.ExperienceId == id);
-            return View(thisExperience);
+            var thisSuggestion = _db.Suggestions.FirstOrDefault(suggestions => suggestions.SuggestionId == id);
+            return View(thisSuggestion);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var thisExperience = _db.Experiences.FirstOrDefault(experiences => experiences.ExperienceId == id);
-            _db.Experiences.Remove(thisExperience);
+            var thisSuggestion = _db.Suggestions.FirstOrDefault(suggestions => suggestions.SuggestionId == id);
+            _db.Suggestions.Remove(thisSuggestion);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
