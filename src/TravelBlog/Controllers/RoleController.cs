@@ -85,7 +85,7 @@ namespace TravelBlog.Controllers
                 {
                     var thisRole = _db.Roles.FirstOrDefault(r => r.Id == role.Id);
                     thisRole.Name = role.Name;
-                    //_db.Entry(thisRole).State = EntityState.Modified;// useless thing
+                    thisRole.NormalizedName = role.Name.ToUpper();
                     _db.SaveChanges();
 
                     return RedirectToAction("Index");
@@ -107,24 +107,48 @@ namespace TravelBlog.Controllers
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> RoleAddToUser(string UserName, string Roles)
             {
-
                 ApplicationUser user = _db.Users.FirstOrDefault(u => u.UserName == UserName);
                 await _userManager.AddToRoleAsync(user, Roles);
-
                 ViewBag.ResultMessage = "Role created successfully !";
-
-                // prepopulat roles for the view dropdown
                 var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = list;
 
                 return View("ManageUserRoles");
             }
 
-            //public async Task<IActionResult> GetRoles(string UserName)
-            //{
-            //    ApplicationUser user = _db.Users.FirstOrDefault(u => u.UserName == UserName);
-            //    //var list = _db.
-            //    return View("ManageUserRoles");
-            //}
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> GetRoles(string UserName)
+            {
+                if (!string.IsNullOrWhiteSpace(UserName))
+                {
+                    ApplicationUser user = await _userManager.FindByNameAsync(UserName);
+                    ViewBag.RolesForThisUser = await _userManager.GetRolesAsync(user);
+                    var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                    ViewBag.Roles = list;
+                    ViewBag.UserName = new SelectList(_db.Users, "UserName", "UserName");
+                }
+                return View("ManageUserRoles");
+            }
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> DeleteRoleForUser(string UserName, string Roles)
+            {
+                ApplicationUser user = await _userManager.FindByNameAsync(UserName);
+
+                if (await _userManager.IsInRoleAsync(user, Roles))
+                {
+                    await _userManager.RemoveFromRoleAsync(user, Roles);
+                }
+                else
+                {
+                    ViewBag.ResultMessage = "This user doesn't have that role.";
+                }
+                var list = _db.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+                ViewBag.UserName = new SelectList(_db.Users, "UserName", "UserName");
+
+                return View("ManageUserRoles");
+            }
         }
     }
