@@ -3,6 +3,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    $(document).ready(function () {
+
+        $('.display-view').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("Create")',
+                success: function (result) {
+                    $('#result1').html(result);
+                }
+            });
+        });
+    });
+
+</script>
+
 @model IEnumerable<TravelBlog.Models.Suggestion>
  
 <h2>Locations</h2>
@@ -14,4 +31,6 @@
     }
 </ul>
 
-<p>@Html.ActionLink("Suggest a Location", "Create")</p>
+<h4 class="display-view">Click to create</h4>
+<div id="result1"></div>
+@*<p>@Html.ActionLink("Suggest a Location", "Create")</p>*@

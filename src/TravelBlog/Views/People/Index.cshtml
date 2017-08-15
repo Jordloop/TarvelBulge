@@ -1,9 +1,27 @@
-﻿@model IEnumerable<TravelBlog.Models.People>
-
-@{
-    ViewData["Title"] = "TarvelBulge Peoples!!";
+﻿@{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@model IEnumerable<TravelBlog.Models.People>
+
+<script>
+    $(document).ready(function () {
+
+        $('.display-view').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("Create")',
+                success: function (result) {
+                    $('#result3').html(result);
+                }
+            });
+        });
+    });
+
+</script>
+
 
 <hr />
 <table class="table">
@@ -35,5 +53,7 @@
     }
 </table>
 <p>
-    @Html.ActionLink("Create New", "Create")
+   @* @Html.ActionLink("Create New", "Create")*@
 </p>
+<h4 class="display-view">Click to create</h4>
+<div id="result3"></div>

@@ -2,23 +2,35 @@
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("test");
+        $('.Register').submit(function (event) {
+            console.log("button");
+            event.preventDefault();
+            $.ajax({
+                url: '/Account/Register',
+                type: 'POST',
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function (result) {
+                    var resultMessage = 'You\'ve added a new user to the database!'<br>'Email:' + result.Email;
+                $('#result6').html(resultMessage);
+                }
+            });
+        });
+    });
 
-@using TravelBlog.ViewModels
-
-@model RegisterViewModel
+</script>
 
 <h2>Register a new user</h2>
 <hr />
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
 
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-
-    @Html.LabelFor(m => m.ConfirmPassword)
-    @Html.PasswordFor(m => m.ConfirmPassword)
-
-    <input type="submit" value="Register" />
-}
+    <form action="Register" class="Register">
+        <label for="Email">Email: </label>
+        <input type="text" name="Email" />
+        <label for="Password">Password: </label>
+        <input type="text" name="Password" />
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result6"></div>

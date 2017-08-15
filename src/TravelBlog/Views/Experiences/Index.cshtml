@@ -4,7 +4,22 @@
     ViewData["Title"] = "TarvelBulge Experiences!!";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    $(document).ready(function () {
 
+        $('.display-view').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("Create")',
+                success: function (result) {
+                    $('#result5').html(result);
+                }
+            });
+        });
+    });
+
+</script>
 <hr />
 <table class="table">
     <tr>
@@ -33,6 +48,8 @@
         </tr>
     }
 </table>
-<p>
+<h4 class="display-view">Click to create</h4>
+<div id="result5"></div>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@

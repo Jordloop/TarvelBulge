@@ -4,7 +4,25 @@
 }
 
 @model IEnumerable<TravelBlog.Models.Location>
- 
+
+<script>
+    $(document).ready(function () {
+    
+        $('.display-view').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("Create")',
+                success: function (result) {
+                    $('#result4').html(result);
+                }
+            });
+        });
+    });
+
+</script>
+
+
 <h2>Locations</h2>
 <hr/>
 <h4>@Html.DisplayNameFor(model => model.Name)</h4>
@@ -15,4 +33,7 @@
     }
 </ul>
 
-<p>@Html.ActionLink("Add a Location", "Create")</p>
+
+<h4 class="display-view">Click to create</h4>
+<div id="result4"></div>
+@*<p>@Html.ActionLink("Add a Location", "Create")</p>*@

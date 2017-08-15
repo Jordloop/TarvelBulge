@@ -2,6 +2,7 @@
 
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width"/>
     <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css"/>
     <title>@ViewBag.Title</title>
@@ -14,12 +15,12 @@
     </header>
     <div id="body">
         <section class="content-wrapper main-content clear-fix">
+            @Html.Partial("_Footer.cshtml")
              @RenderBody()
         </section>          
     </div>
     <footer>
         <div class="content-wrapper">
-            @Html.Partial("_Footer.cshtml")
         </div>
     </footer>
 </body>

@@ -1,4 +1,27 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole>
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.display-view').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'html',
+                url: '@Url.Action("Create")',
+                success: function (result) {
+                    $('#result2').html(result);
+                }
+            });
+        });
+    });
+
+</script>
+
+@model IEnumerable<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole>
 @{
     ViewBag.Title = "Index";
 }
@@ -17,3 +40,6 @@
         </p>
     }
 </div>
+
+<h4 class="display-view">Click to create</h4>
+<div id="result2"></div>

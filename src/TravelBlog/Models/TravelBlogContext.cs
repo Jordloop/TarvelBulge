@@ -22,5 +22,6 @@ namespace TravelBlog.Models
         public virtual DbSet<Experience> Experiences { get; set; }
         public virtual DbSet<People> People { get; set; }
         public virtual DbSet<Suggestion> Suggestions { get; set; }
+        public TravelBlogContext() { }
     }
 }

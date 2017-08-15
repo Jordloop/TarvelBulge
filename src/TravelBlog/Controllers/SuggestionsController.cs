@@ -53,7 +53,7 @@ namespace TravelBlog.Controllers
             return View(thisSuggestion);
         }
         //Create 
-
+         
         public IActionResult Edit(int id)
         {
             var thisSuggestion = _db.Suggestions.FirstOrDefault(suggestions => suggestions.SuggestionId == id);

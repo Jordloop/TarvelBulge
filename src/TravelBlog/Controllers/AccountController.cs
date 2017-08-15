@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using TravelBlog.Models;
 using System.Threading.Tasks;
 using TravelBlog.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BasicAuthentication.Controllers
 {
     public class AccountController : Controller
     {
+        private TravelBlogContext db = new TravelBlogContext();
         private readonly TravelBlogContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -28,14 +32,15 @@ namespace BasicAuthentication.Controllers
             return View();
         }
 
+        [Route("/Account/Register")]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(string Email, string Password)
         {
-            var user = new ApplicationUser { UserName = model.Email };
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            ApplicationUser user = new ApplicationUser { Email = Email, UserName = Email };
+            IdentityResult result = await _userManager.CreateAsync(user, Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index");
+                return Json(user);
             }
             else
             {
@@ -66,5 +71,14 @@ namespace BasicAuthentication.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
+
+        //[HttpPost]
+        //public IActionResult NewUser(RegisterViewModel model)
+        //{
+        //    var user = new ApplicationUser(email, password, confirmPassword);
+        //    _db.user.Add(user);
+        //    _db.SaveChanges();
+        //    return Json(user);
+        //}
     }
 }
